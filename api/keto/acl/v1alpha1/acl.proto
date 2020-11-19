@@ -15,28 +15,20 @@ option php_namespace = "Ory\\Keto\\Acl\\V1alpha1";
 // While a tuple reflects a relationship between Object
 // and Subject, they do not completely define the effective ACLs.
 message RelationTuple {
-  // The object related by this tuple.
-  Object object = 1;
+  // The namespace this relation tuple lives in.
+  string namespace = 1;
+  // The object referenced by this tuple. Is inherently in the
+  // namespace of the tuple.
+  string object_id = 2;
   // The relation between an Object and a Subject.
-  string relation = 2;
+  string relation = 3;
   // The subject related by this tuple.
   // A Subject either represents a concrete subject id or
   // a SubjectSet that expands to more Subjects.
-  Subject subject = 3;
-  // Used to perform a consistent read-modify-write (lock).
-  string etag = 4;
-}
-
-// Object is an object in a namespace
-// referenced by a RelationTuple or SubjectSet.
-//
-// It represents a "resource" or "digital object".
-message Object {
-  // The namespace of the object.
-  // This effectively is the namespace of the whole RelationTuple.
-  string namespace = 1;
-  // The object id.
-  string id = 2;
+  Subject subject = 4;
+  // Used to perform a consistent operation (read-modify-write)
+  // by ensuring no changes where made between steps.
+  string etag = 5;
 }
 
 // Subject is either a concrete subject id or
@@ -56,8 +48,11 @@ message Subject {
 // the same `relation` to an `object`.
 // Also used for inheritance.
 message SubjectSet {
+  // The namespace of the object and relation referenced
+  // in this subject set.
+  string namespace = 1;
   // The object selected by the subjects.
-  Object object = 1;
+  string object_id = 2;
   // The relation to the object by the subjects.
-  string relation = 2;
+  string relation = 3;
 }

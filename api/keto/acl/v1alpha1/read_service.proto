@@ -33,12 +33,14 @@ message ListRelationTuplesRequest {
   //  - object & relation & subject: check whether the relation tuple already exists, before writing it
   //
   message Query {
+    // Required.
+    string namespace = 1;
     // Optional.
-    Object object = 1;
+    string object_id = 2;
     // Optional.
-    string relation = 2;
+    string relation = 3;
     // Optional.
-    Subject subject = 3;
+    Subject subject = 4;
   }
   // All field constraints are concatenated
   // with a logical AND operator.
