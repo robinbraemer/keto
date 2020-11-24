@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package keto.acl.node.v1alpha1;
 
+import "google/api/client.proto";
+
 option go_package = "github.com/ory/keto/api/keto/acl/node/v1alpha1;node";
 option csharp_namespace = "Ory.Keto.Acl.Node.V1Alpha1";
 option java_multiple_files = true;
@@ -24,5 +26,7 @@ service NodeService {
   //  - schema node election
   //  - replace groupcache's normal http server with protobuf grpc protocol!!!
   //    - https://github.com/mailgun/groupcache/blob/8672aac324c41ba3909ad69e1a76b678894d378b/http.go#L160
+
+  option (google.api.default_host) = "use-correct-keto-host-in-client";
 }
 

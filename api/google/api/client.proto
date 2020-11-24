@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package google.api;
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.ServiceOptions {
+    // The hostname for this service.
+    // This should be specified with no prefix or protocol.
+    //
+    // Example:
+    //
+    //   service Foo {
+    //     option (google.api.default_host) = "foo.bar.com";
+    //     ...
+    //   }
+    string default_host = 1049;
+}

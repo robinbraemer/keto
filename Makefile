@@ -64,16 +64,40 @@ docker: deps
 		packr clean
 
 #
-# Generate APIs and client stubs from the definitions
+# Generate API code
 #
-.PHONY: buf-gen
-buf-gen:
+.PHONY: buf-gen-api
+buf-gen-api:
 		buf generate \
 		--config buf/api/buf.yaml \
 		--template buf/api/buf.gen.yaml \
 		&& \
-		echo "TODO: generate gapic client at ./client" \
+		echo "ProtoBuf and gRPC code was generated."
+
+#
+# Generate clients from the gRPC definitions.
+#
+.PHONY: buf-gen-client
+buf-gen-client:
+		buf generate \
+		--config buf/client/v1alpha1/buf.yaml \
+		--template buf/client/v1alpha1/buf.gen.yaml \
 		&& \
+		buf generate \
+		--config buf/client/admin/v1alpha1/buf.yaml \
+		--template buf/client/admin/v1alpha1/buf.gen.yaml \
+		&& \
+		buf generate \
+		--config buf/client/node/v1alpha1/buf.yaml \
+		--template buf/client/node/v1alpha1/buf.gen.yaml \
+		&& \
+		echo "Client code was generated."
+
+#
+# Generate all API & client code from the definitions
+#
+.PHONY: buf-gen
+buf-gen: buf-gen-api buf-gen-client
 		echo "All code was generated successfully!"
 
 #
@@ -87,7 +111,7 @@ buf-lint:
 		echo "All lint checks passed successfully!"
 
 #
-# Generate after linting succeeded
+# Lint API definition and then generate code
 #
 .PHONY: buf
 buf: buf-lint buf-gen

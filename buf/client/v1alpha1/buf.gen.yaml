@@ -1,0 +1,5 @@
+version: v1beta1
+plugins:
+  - name: go_gapic
+    out: client
+    opt: module=github.com/ory/keto/api,go-gapic-package=github.com/ory/keto/api/acl/v1alpha1;acl

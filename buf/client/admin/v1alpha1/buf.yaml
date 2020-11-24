@@ -1,0 +1,7 @@
+version: v1beta1
+build:
+  roots:
+    - api
+  excludes:
+    - api/keto/acl/node
+    - api/keto/acl/v1alpha1
